@@ -8,15 +8,18 @@ def my_part1(input)
 
   left = 0
   right = numbers.size - 1
-  while numbers[left] + numbers[right] != TARGET && left < right
-    while numbers[left] + numbers[right] > TARGET
+  while left < right
+    while right > left && numbers[left] + numbers[right] > TARGET
       right -= 1
     end
-    while numbers[left] + numbers[right] < TARGET
+    while left < right && numbers[left] + numbers[right] < TARGET
       left += 1
     end
+    if numbers[left] + numbers[right] == 2020
+      return numbers[left] * numbers[right]
+    end
   end
-  numbers[left] * numbers[right]
+  return nil
 end
 
 def my_part2(input)
@@ -24,28 +27,36 @@ def my_part2(input)
 
   left = 0
   right = numbers.size - 1
-  while numbers.values_at(left, left+1, right).sum > TARGET && left+1 < right
+
+  while numbers.values_at(left, right-1, right).sum < TARGET
+    left += 1
+    return nil if left > right - 2
+  end
+
+  while numbers.values_at(left, left+1, right).sum > TARGET
     right -= 1
+    return nil if left > right - 2
   end
-  while numbers.values_at(left, right-1, right).sum < TARGET && left < right-1
-    left += 1
-  end
+  maxright = right
 
-  middle = left + 1
-  while middle < right
+  while left + 1 < right
     rem = TARGET - numbers[left]
-    while numbers[middle] + numbers[right] > rem
-      right -= 1
-    end
-    while numbers[middle] + numbers[right] < rem
-      middle += 1
-    end
-    break if numbers.values_at(left, middle, right).sum == TARGET
-    left += 1
     middle = left + 1
+    while middle < right
+      while numbers[middle] + numbers[right] < rem
+        middle += 1
+      end
+      while numbers[middle] + numbers[right] > rem
+        right -= 1
+      end
+      if numbers.values_at(left, middle, right).sum == TARGET
+        return numbers.values_at(left, middle, right).product
+      end
+    end
+    left += 1
+    right = maxright
   end
-
-  numbers.values_at(left, middle, right).product
+  return nil
 end
 
 def brute_part1(input)

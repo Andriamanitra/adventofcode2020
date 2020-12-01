@@ -1,21 +1,21 @@
 $ crystal build --release benchmarks.cr 
 $ ./benchmarks input.txt 
-my solution (part 1)  81.25k ( 12.31µs) (± 2.84%)  15.6kB/op     1.59× slower
-my solution (part 2)  81.91k ( 12.21µs) (± 3.99%)  15.6kB/op     1.57× slower
- bruteforce (part 1)   1.07k (931.17µs) (± 3.25%)  1.31MB/op   119.97× slower
- bruteforce (part 2)  15.71  ( 63.64ms) (± 1.25%)  84.1MB/op  8199.77× slower
-      smart (part 1) 128.84k (  7.76µs) (± 1.35%)  6.14kB/op          fastest
+my solution (part 1)  83.83k ( 11.93µs) (± 2.16%)  15.6kB/op     1.57× slower
+my solution (part 2)  84.15k ( 11.88µs) (± 2.15%)  15.6kB/op     1.57× slower
+ bruteforce (part 1)   1.10k (911.28µs) (± 1.70%)  1.31MB/op   120.12× slower
+ bruteforce (part 2)  15.44  ( 64.75ms) (± 3.23%)  84.1MB/op  8535.03× slower
+      smart (part 1) 131.82k (  7.59µs) (± 1.24%)  6.14kB/op          fastest
 
 $ ruby benchmarks.rb input.txt 
 Rehearsal --------------------------------------------------------
-my solution (part 1)   0.000107   0.000009   0.000116 (  0.000103)
-my solution (part 2)   0.000050   0.000005   0.000055 (  0.000053)
-bruteforce (part 1)    0.002064   0.000000   0.002064 (  0.002069)
-bruteforce (part 2)    0.037378   0.000000   0.037378 (  0.037615)
------------------------------------------------ total: 0.039613sec
+my solution (part 1)   0.000075   0.000003   0.000078 (  0.000075)
+my solution (part 2)   0.000073   0.000003   0.000076 (  0.000075)
+bruteforce (part 1)    0.001879   0.000073   0.001952 (  0.001953)
+bruteforce (part 2)    0.037608   0.000000   0.037608 (  0.037682)
+----------------------------------------------- total: 0.039714sec
 
                            user     system      total        real
-my solution (part 1)   0.000068   0.000000   0.000068 (  0.000066)
-my solution (part 2)   0.000090   0.000000   0.000090 (  0.000089)
-bruteforce (part 1)    0.001951   0.000000   0.001951 (  0.001970)
-bruteforce (part 2)    0.035976   0.000000   0.035976 (  0.036012)
+my solution (part 1)   0.000110   0.000000   0.000110 (  0.000097)
+my solution (part 2)   0.000076   0.000000   0.000076 (  0.000075)
+bruteforce (part 1)    0.001845   0.000000   0.001845 (  0.001848)
+bruteforce (part 2)    0.036014   0.000000   0.036014 (  0.036057)
