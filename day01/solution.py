@@ -19,27 +19,27 @@ while numbers[left] + numbers[right] != TARGET:
         right -= 1
     while numbers[left] + numbers[right] < TARGET:
         left += 1
-a = numbers[left]
-b = numbers[right]
-
-print(a*b)
+print(numbers[left] * numbers[right])
 
 # Part 2
 left = 0
+middle = 1
 right = len(numbers) - 1
-middle = left + 1
+maxright = right
 
-while middle < right:
+while left + 1 < right:
     remaining = TARGET - numbers[left]
-    while numbers[middle] + numbers[right] > remaining:
-        right -= 1
-    while numbers[middle] + numbers[right] < remaining:
-        middle += 1
-    if numbers[left] + numbers[middle] + numbers[right] == TARGET:
-        break
-    left += 1
     middle = left + 1
+    while middle < right:
+        while numbers[middle] + numbers[right] < remaining:
+            middle += 1
+        while numbers[middle] + numbers[right] > remaining:
+            right -= 1
+        if numbers[left] + numbers[middle] + numbers[right] == TARGET:
+            print(numbers[left] * numbers[middle] * numbers[right])
+            print(f"Took {1000*(time.time()-t0):.2f} milliseconds")
+            exit(0)
+    left += 1
+    right = maxright
 
-print(numbers[left] * numbers[middle] * numbers[right])
-
-print(f"Took {1000*(time.time()-t0):.2f} milliseconds")
+print("Couldn't find a solution")
