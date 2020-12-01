@@ -1,9 +1,10 @@
-$ crystal build --release benchmarks.cr
+$ crystal build --release benchmarks.cr 
 $ ./benchmarks input.txt 
-my solution (part 1)  83.84k ( 11.93µs) (± 1.44%)  15.6kB/op          fastest
-my solution (part 2)  82.79k ( 12.08µs) (± 2.44%)  15.6kB/op     1.01× slower
- bruteforce (part 1)   1.09k (914.90µs) (± 1.65%)  1.31MB/op    76.71× slower
- bruteforce (part 2)  15.97  ( 62.60ms) (± 0.98%)  84.1MB/op  5248.68× slower
+my solution (part 1)  81.25k ( 12.31µs) (± 2.84%)  15.6kB/op     1.59× slower
+my solution (part 2)  81.91k ( 12.21µs) (± 3.99%)  15.6kB/op     1.57× slower
+ bruteforce (part 1)   1.07k (931.17µs) (± 3.25%)  1.31MB/op   119.97× slower
+ bruteforce (part 2)  15.71  ( 63.64ms) (± 1.25%)  84.1MB/op  8199.77× slower
+      smart (part 1) 128.84k (  7.76µs) (± 1.35%)  6.14kB/op          fastest
 
 $ ruby benchmarks.rb input.txt 
 Rehearsal --------------------------------------------------------

@@ -56,8 +56,19 @@ def brute_part2(input)
   input.split.map(&.to_i).combinations(3).select{|x| x.sum == 2020}.[0].product
 end
 
-abort "BUGS IN PART 1" if my_part1(input) != brute_part1(input)
-abort "BUGS IN PART 2" if my_part2(input) != brute_part2(input)
+def smart_part1(input)
+  set = Set(Int32).new
+  input.each_line do |s|
+    x = s.to_i
+    if set.includes?(2020 - x)
+      return x * (2020 - x)
+    end
+    set.add(x)
+  end
+end
+
+abort "BUGS IN PART 1" unless my_part1(input) == brute_part1(input) == smart_part1(input)
+abort "BUGS IN PART 2" unless my_part2(input) == brute_part2(input)
 
 Benchmark.ips{|x|
   x.report("my solution (part 1)") {
@@ -71,5 +82,8 @@ Benchmark.ips{|x|
   }
   x.report("bruteforce (part 2)") {
     brute_part2(input)
+  }
+  x.report("smart (part 1)") {
+    smart_part1(input)
   }
 }
