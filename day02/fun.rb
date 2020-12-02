@@ -1,6 +1,6 @@
 # Let's try to solve it with ONLY regex!
 
-# I'm not happy with using Regexp#captures -method
+# I'm not happy with using MatchData#captures -method
 # because it returns an ARRAY(!) which is CLEARLY 
 # NOT REGEX. But this is the best I have come up
 # with so far...
