@@ -1,6 +1,6 @@
 def parseline(line)
   a, b, letter, password = line.split(/\W+/)
-  return a.to_i, b.to_i, letter[0], password
+  return a.to_i, b.to_i, letter.char_at(0), password
 end
 
 def part1(input)
