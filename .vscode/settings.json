@@ -1,0 +1,8 @@
+{
+    "code-runner.executorMap": {
+        "python": "test -f input.txt && cat input.txt | python -u $fileName || python -u $fileName",
+        "ruby": "test -f input.txt && ruby $fileName input.txt || ruby $fileName",
+        "julia": "test -f input.txt && cat input.txt | julia $fileName || julia $fileName",
+        "crystal": "test -f input.txt && crystal run --no-color $fileName input.txt || crystal run --no-color $fileName"
+    }
+}
