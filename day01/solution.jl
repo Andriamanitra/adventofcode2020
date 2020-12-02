@@ -22,3 +22,4 @@ function main()
     println(brute2(numbers))
 end
 
+main()
