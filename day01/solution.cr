@@ -23,12 +23,12 @@ def part2(numbers)
   left = 0
   right = numbers.size - 1
 
-  while numbers.values_at(left, right-1, right).sum < TARGET
+  while numbers.values_at(left, right - 1, right).sum < TARGET
     left += 1
     return nil if left > right - 2
   end
 
-  while numbers.values_at(left, left+1, right).sum > TARGET
+  while numbers.values_at(left, left + 1, right).sum > TARGET
     right -= 1
     return nil if left > right - 2
   end
@@ -58,9 +58,9 @@ puts "(Part 1)"
 p1result = part1(numbers)
 if p1result
   a, b = p1result
-  puts "#{a} + #{b} = #{a+b}"
+  puts "#{a} + #{b} = #{a + b}"
   puts "#{a} * #{b} = #{a*b}"
-  puts "Answer: #{a*b}" if a+b == TARGET
+  puts "Answer: #{a*b}" if a + b == TARGET
   puts
 else
   puts "Couldn't find a solution!"
@@ -70,9 +70,9 @@ puts "(Part 2)"
 p2result = part2(numbers)
 if p2result
   a, b, c = p2result
-  puts "#{a} + #{b} + #{c} = #{a+b+c}"
+  puts "#{a} + #{b} + #{c} = #{a + b + c}"
   puts "#{a} * #{b} * #{c} = #{a*b*c}"
-  puts "Answer: #{a*b*c}" if a+b+c == TARGET
+  puts "Answer: #{a*b*c}" if a + b + c == TARGET
   puts
 else
   puts "Couldn't find a solution!"

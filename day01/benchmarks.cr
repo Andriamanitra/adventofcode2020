@@ -28,12 +28,12 @@ def my_part2(input)
   left = 0
   right = numbers.size - 1
 
-  while numbers.values_at(left, right-1, right).sum < TARGET
+  while numbers.values_at(left, right - 1, right).sum < TARGET
     left += 1
     return nil if left > right - 2
   end
 
-  while numbers.values_at(left, left+1, right).sum > TARGET
+  while numbers.values_at(left, left + 1, right).sum > TARGET
     right -= 1
     return nil if left > right - 2
   end
@@ -60,11 +60,11 @@ def my_part2(input)
 end
 
 def brute_part1(input)
-  input.split.map(&.to_i).combinations(2).select{|x| x.sum == 2020}.[0].product
+  input.split.map(&.to_i).combinations(2).select { |x| x.sum == 2020 }.[0].product
 end
 
 def brute_part2(input)
-  input.split.map(&.to_i).combinations(3).select{|x| x.sum == 2020}.[0].product
+  input.split.map(&.to_i).combinations(3).select { |x| x.sum == 2020 }.[0].product
 end
 
 def smart_part1(input)
@@ -81,7 +81,7 @@ end
 abort "BUGS IN PART 1" unless my_part1(input) == brute_part1(input) == smart_part1(input)
 abort "BUGS IN PART 2" unless my_part2(input) == brute_part2(input)
 
-Benchmark.ips{|x|
+Benchmark.ips { |x|
   x.report("my solution (part 1)") {
     my_part1(input)
   }

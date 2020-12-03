@@ -4,16 +4,16 @@ def parseline(line)
 end
 
 def part1(input)
-  input.split("\n", remove_empty: true).count{|line|
+  input.split("\n", remove_empty: true).count { |line|
     a, b, letter, password = parseline(line)
     a <= password.count(letter) <= b
   }
 end
 
 def part2(input)
-  input.split("\n", remove_empty: true).count{|line|
+  input.split("\n", remove_empty: true).count { |line|
     a, b, letter, password = parseline(line)
-    (password[a-1] == letter) ^ (password[b-1] == letter)
+    (password[a - 1] == letter) ^ (password[b - 1] == letter)
   }
 end
 
