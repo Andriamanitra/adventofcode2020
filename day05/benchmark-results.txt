@@ -3,7 +3,11 @@ part1(input) # => 888
 alt_part1(input) # => 888
 part2(input) # => 522
 alt_part2(input) # => 522
-   original part1   4.09k (244.51µs) (± 4.12%)   153kB/op   4.22× slower
-   original part2   2.46k (406.17µs) (± 2.40%)   153kB/op   7.01× slower
-"optimized" part1  15.90k ( 62.89µs) (± 2.63%)  25.2kB/op   1.09× slower
-"optimized" part2  17.26k ( 57.94µs) (± 3.04%)  25.3kB/op        fastest
+ss(input) # => 522
+bs(input) # => 522
+   original part1   3.93k (254.43µs) (± 3.20%)   153kB/op   4.20× slower
+"optimized" part1  15.30k ( 65.37µs) (± 2.72%)  25.2kB/op   1.08× slower
+   original part2   2.28k (437.77µs) (± 3.23%)   153kB/op   7.23× slower
+"optimized" part2  16.52k ( 60.52µs) (± 1.64%)  25.3kB/op        fastest
+     with sorting  10.09k ( 99.15µs) (± 1.97%)  43.8kB/op   1.64× slower
+     with bsearch  10.80k ( 92.59µs) (± 3.21%)  37.8kB/op   1.53× slower
