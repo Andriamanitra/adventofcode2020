@@ -1,16 +1,16 @@
 def part1(input)
   groups = input.split("\n\n")
-  groups.map(&.split.join.chars.uniq.size).sum
+  groups.sum(&.split.join.chars.uniq.size)
 end
 
 def part2(input)
   groups = input.split("\n\n")
-  groups.map { |group|
+  groups.sum { |group|
     group.split
       .map(&.chars.to_set)
       .reduce { |a, b| a & b }
       .size
-  }.sum
+  }
 end
 
 input = ARGF.gets_to_end
