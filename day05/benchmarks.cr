@@ -35,15 +35,15 @@ macro seat_to_id(s)
 end
 
 def part1_opt(input)
-  input.each_line.max_of { |row|
-    seat_to_id(row)
+  input.each_line.max_of { |line|
+    seat_to_id(line)
   }
 end
 
 def part2_opt(input)
   occupied = BitArray.new(SEATS)
-  input.each_line { |row|
-    occupied[seat_to_id(row)] = true
+  input.each_line { |line|
+    occupied[seat_to_id(line)] = true
   }
   (1...SEATS).find { |seat| occupied[seat - 1] && !occupied[seat] }
 end
@@ -116,6 +116,44 @@ def part2_unsafe(input)
   (1...SEATS).find { |seat| occupied[seat - 1] && !occupied[seat] }
 end
 
+# Expected sum version (nice one reddit)
+# We can use the fact that expected sum of numbers from 0 to N is N*(N+1)/2
+# to find the missing number without iterating over the whole set
+# - only does one pass and keeps track of lowest, highest and sum
+#   (no need to keep track of all seat ids)
+def part2_expected_sum(input)
+  low = SEATS
+  high = 0
+  total = 0
+  input.each_line { |line|
+    id = seat_to_id(line)
+    if id < low
+      low = id
+    elsif id > high
+      high = id
+    end
+    total += id
+  }
+  (((high + 1) * high) - ((low - 1) * low))//2 - total
+end
+
+def part2_expected_sum2(input)
+  low = SEATS
+  high = 0
+  total = 0
+  ptr = input.to_unsafe
+  (0...(input.size / 11)).map { |i|
+    id = seat_from_ptr((ptr + 11 * i))
+    if id < low
+      low = id
+    elsif id > high
+      high = id
+    end
+    total += id
+  }
+  (((high + 1) * high) - ((low - 1) * low))//2 - total
+end
+
 input = ARGF.gets_to_end
 p! part1(input)
 p! part1_opt(input)
@@ -125,6 +163,8 @@ p! part2_ss(input)
 p! part2_bs(input)
 p! part2_ks(input)
 p! part2_unsafe(input)
+p! part2_expected_sum(input)
+p! part2_expected_sum2(input)
 
 # Part 1
 Benchmark.ips do |x|
@@ -140,4 +180,6 @@ Benchmark.ips do |x|
   x.report("sorting + bsearch") { part2_bs(input) }
   x.report(%["optimized" (BitArray)]) { part2_opt(input) }
   x.report("unsafe (+ BitArray)") { part2_unsafe(input) }
+  x.report("expected sum") { part2_expected_sum(input) }
+  x.report("unsafe expected sum") { part2_expected_sum2(input) }
 end
