@@ -167,12 +167,14 @@ p! part2_expected_sum(input)
 p! part2_expected_sum2(input)
 
 # Part 1
+puts "\n(Part 1) Benchmarks"
 Benchmark.ips do |x|
-  x.report("original part1") { part1(input) }
-  x.report(%("optimized" part1)) { part1_opt(input) }
+  x.report("original") { part1(input) }
+  x.report(%("optimized")) { part1_opt(input) }
 end
 
 # Part 2
+puts "\n(Part 2) Benchmarks"
 Benchmark.ips do |x|
   x.report("original") { part2(input) }
   x.report("hash instead of tr") { part2_ks(input) }
