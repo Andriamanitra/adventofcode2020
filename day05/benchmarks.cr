@@ -102,7 +102,7 @@ end
 macro seat_from_ptr(ptr)
   sum = 0
   {{ptr}}.to_slice(10).each_with_index { |uint, idx|
-    sum += ((~uint & 0b0100) >> 2).to_i << (9-idx)
+    sum |= ((~uint & 0b0100) >> 2).to_i << (9-idx)
   }
   sum
 end
