@@ -11,15 +11,15 @@ part2_expected_sum(input) # => 522
 part2_expected_sum2(input) # => 522
 
 (Part 1) Benchmarks
-   original   3.82k (261.96µs) (± 3.76%)   152kB/op   4.02× slower
-"optimized"  15.35k ( 65.17µs) (± 2.08%)  25.2kB/op        fastest
+   original   3.95k (252.89µs) (± 3.68%)   152kB/op   3.71× slower
+"optimized"  14.68k ( 68.10µs) (± 3.73%)  25.2kB/op        fastest
 
 (Part 2) Benchmarks
-              original   2.19k (456.34µs) (± 3.08%)   153kB/op  33.83× slower
-    hash instead of tr   2.78k (360.13µs) (± 4.64%)   188kB/op  26.69× slower
-      sorting + search   8.63k (115.84µs) (± 3.09%)  44.0kB/op   8.59× slower
-     sorting + bsearch   9.80k (102.03µs) (± 3.45%)  37.9kB/op   7.56× slower
-"optimized" (BitArray)  13.28k ( 75.32µs) (± 2.98%)  25.4kB/op   5.58× slower
-   unsafe (+ BitArray)  74.12k ( 13.49µs) (± 3.03%)  12.9kB/op        fastest
-          expected sum  14.32k ( 69.84µs) (± 3.66%)  25.1kB/op   5.18× slower
-   unsafe expected sum  71.75k ( 13.94µs) (± 4.82%)  12.7kB/op   1.03× slower
+              original   2.16k (462.22µs) (± 3.34%)   153kB/op  35.54× slower
+    hash instead of tr   2.76k (361.97µs) (± 5.58%)   188kB/op  27.84× slower
+      sorting + search   8.35k (119.73µs) (± 3.65%)  44.0kB/op   9.21× slower
+     sorting + bsearch   9.14k (109.45µs) (± 6.75%)  37.9kB/op   8.42× slower
+"optimized" (BitArray)  12.44k ( 80.37µs) (± 5.04%)  25.4kB/op   6.18× slower
+   unsafe (+ BitArray)  73.77k ( 13.56µs) (± 5.71%)  12.9kB/op   1.04× slower
+          expected sum  13.33k ( 75.03µs) (± 4.41%)  25.1kB/op   5.77× slower
+   unsafe expected sum  76.90k ( 13.00µs) (± 4.97%)  12.7kB/op        fastest
