@@ -1,13 +1,7 @@
 $ crystal run --release benchmarks.cr -- input.txt
-part1(input) # => 888
-alt_part1(input) # => 888
-part2(input) # => 522
-alt_part2(input) # => 522
-ss(input) # => 522
-bs(input) # => 522
-   original part1   3.93k (254.43µs) (± 3.20%)   153kB/op   4.20× slower
-"optimized" part1  15.30k ( 65.37µs) (± 2.72%)  25.2kB/op   1.08× slower
-   original part2   2.28k (437.77µs) (± 3.23%)   153kB/op   7.23× slower
-"optimized" part2  16.52k ( 60.52µs) (± 1.64%)  25.3kB/op        fastest
-     with sorting  10.09k ( 99.15µs) (± 1.97%)  43.8kB/op   1.64× slower
-     with bsearch  10.80k ( 92.59µs) (± 3.21%)  37.8kB/op   1.53× slower
+              original   1.82k (550.66µs) (± 6.42%)   153kB/op  31.60× slower
+    hash instead of tr   2.12k (472.61µs) (± 7.41%)   189kB/op  27.12× slower
+      sorting + search   7.20k (138.80µs) (± 6.34%)  44.0kB/op   7.97× slower
+     sorting + bsearch   7.76k (128.80µs) (± 6.36%)  37.9kB/op   7.39× slower
+"optimized" (BitArray)  10.83k ( 92.38µs) (± 7.20%)  25.4kB/op   5.30× slower
+   unsafe (+ BitArray)  57.39k ( 17.42µs) (± 7.73%)  12.9kB/op        fastest
