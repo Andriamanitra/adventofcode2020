@@ -5,7 +5,12 @@ end
 
 def part2(input)
   groups = input.split("\n\n")
-  groups.map { |g| ('a'..'z').count { |q| g.split.all? { |ans| q.in?(ans) } } }.sum
+  groups.map { |group|
+    group.split
+      .map { |answers| Set.new(answers.chars) }
+      .reduce { |a, b| a & b }
+      .size
+  }.sum
 end
 
 input = ARGF.gets_to_end
