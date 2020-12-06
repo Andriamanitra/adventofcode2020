@@ -1,13 +1,13 @@
 def part1(input)
   groups = input.split("\n\n")
-  groups.map { |g| g.split.join.chars.uniq.size }.sum
+  groups.map(&.split.join.chars.uniq.size).sum
 end
 
 def part2(input)
   groups = input.split("\n\n")
   groups.map { |group|
     group.split
-      .map { |answers| Set.new(answers.chars) }
+      .map(&.chars.to_set)
       .reduce { |a, b| a & b }
       .size
   }.sum
