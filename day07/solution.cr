@@ -9,17 +9,17 @@ def visit(graph, node : String, visited : Array(String))
 end
 
 def part1(input)
-  h = Hash(String, Array(String)).new { |asd, key| asd[key] = [] of String }
+  baghash = Hash(String, Array(String)).new { |h, key| h[key] = [] of String }
   input.lines.map { |line|
     bag, contents = line.split("s contain ")
-    contents.scan(/(\w+ \w+ bag)/).map(&.captures).each do |inner|
-      inner.each do |inner_bag|
-        h[inner_bag] << bag unless inner_bag.nil?
+    contents.scan(/\w+ \w+ bag/) do |match|
+      if inner_bag = match[0]
+        baghash[inner_bag] << bag
       end
     end
   }
   visited = [] of String
-  visit(h, "shiny gold bag", visited)
+  visit(baghash, "shiny gold bag", visited)
   visited.size - 1
 end
 
