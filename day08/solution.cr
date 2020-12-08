@@ -28,6 +28,12 @@ class Program
     @instructions[@ip]
   end
 
+  def each_step
+    while step == :RUNNING
+      yield acc
+    end
+  end
+
   def execute
     t0 = Time.utc.to_unix_f
     while step == :RUNNING
@@ -61,11 +67,21 @@ class Program
     if 0 <= @ip < @instructions.size
       execute(@instructions[@ip])
       :RUNNING
-    elsif ip < 0
+    elsif @ip < 0
       raise "Negative instruction pointer: #{@ip}"
+    elsif @ip > @instructions.size
+      raise "Too high instruction pointer: #{@ip}"
     else
       :EXITED
     end
+  end
+
+  def step_back
+    return :FAIL if @history.size < 1
+    previous_state = @history.pop
+    @ip = previous_state.ip
+    @acc = previous_state.acc
+    :SUCCESS
   end
 
   def self.parse(text : String)
