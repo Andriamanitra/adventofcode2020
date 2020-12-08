@@ -32,7 +32,7 @@ def part2(input)
   input.lines.map { |line|
     bag, contents = line.split("s contain ")
     contents.scan(/([0-9]+) (\w+ \w+ bag)/) { |(_, num, innerbag)|
-      baghash[bag] << Edge.new(num.to_i, innerbag) unless num.nil? || innerbag.nil?
+      baghash[bag] << Edge.new(num.to_i, innerbag)
     }
   }
   count_inner(baghash, "shiny gold bag")
