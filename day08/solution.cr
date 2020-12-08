@@ -15,13 +15,11 @@ class Program
   property instructions : Array(Instruction)
   property ip : Int32
   property acc : Int32
-  property history : Array(State)
 
   def initialize(ip = 0, acc = 0)
     @instructions = [] of Instruction
     @ip = ip
     @acc = acc
-    @history = [] of State
   end
 
   def current_instruction
@@ -30,7 +28,7 @@ class Program
 
   def each_step
     while step == :RUNNING
-      yield acc
+      with self yield acc
     end
   end
 
@@ -43,7 +41,6 @@ class Program
   end
 
   def execute(instruction : SimpleInstruction)
-    @history << State.new(@ip, @acc, instruction)
     case instruction.type
     when IType::Nop
       @ip += 1
@@ -101,33 +98,33 @@ class Program
   end
 end
 
-def run_until_repeat(program)
-  visited = Set(Int32).new
-  until visited.includes?(program.ip)
-    visited.add(program.ip)
-    break if program.step == :EXITED
-  end
-  program.acc
-end
-
 def part1(input)
   program = Program.new
-  code = Program.parse(input)
-  program.instructions = code
-  run_until_repeat(program)
-  program.acc
+  program.load(input)
+  visited = Set(Int32).new
+  program.each_step {
+    return program.acc if program.ip.in?(visited)
+    visited.add(program.ip)
+  }
 end
 
 def part2(input)
-  code = Program.parse(input)
   program = Program.new
-  program.instructions = code
+  program.load(input)
 
   # Run the program once to gather all "nop" and "jmp"
   # instructions along the way
-  run_until_repeat(program)
+  visited = Set(Int32).new
+  history = [] of State
+  program.each_step {
+    break if ip.in?(visited)
+    visited.add(ip)
+    if current_instruction.type != IType::Acc
+      history << State.new(ip, acc, current_instruction)
+    end
+  }
 
-  program.history.each { |state|
+  history.each { |state|
     if state.instr.type == IType::Jmp
       mtype = IType::Nop
     elsif state.instr.type == IType::Nop
@@ -135,13 +132,14 @@ def part2(input)
     else
       next
     end
-    modified = code.clone
-    modified[state.ip] = SimpleInstruction.new(mtype, state.instr.number)
-    program.instructions = modified
     program.ip = state.ip
     program.acc = state.acc
-    run_until_repeat(program)
-    return program.acc if program.step == :EXITED
+    program.execute(SimpleInstruction.new(mtype, state.instr.number))
+    program.each_step {
+      return acc if step() == :EXITED
+      break if ip.in?(visited)
+      visited.add(ip)
+    }
   }
   "oops"
 end
