@@ -1,6 +1,6 @@
 def part1(input)
   nums = input.lines.map(&.to_i64)
-  nums[25..].zip(nums.each_cons(25)) { |target, prev25|
+  nums[25..].zip(nums.each_cons(25, reuse: true)) { |target, prev25|
     if !prev25.find { |k| prev25.reject(k).includes?(target - k) }
       return target
     end
