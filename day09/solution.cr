@@ -13,7 +13,7 @@ def part2(input)
   nums.each_with_index { |start, start_idx|
     s = 0
     summed = nums[start_idx..].take_while { |x| s += x; s < target }
-    return summed.min + summed.max if s == target
+    return summed.minmax.sum if s == target
   }
 end
 
