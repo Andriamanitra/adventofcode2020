@@ -10,9 +10,9 @@ end
 def part2(input)
   target = part1(input) || 556543474 # in case part1() returns nil
   nums = input.lines.map(&.to_i64)
-  nums.each_with_index { |start, start_idx|
+  nums.each_index { |idx|
     s = 0
-    summed = nums[start_idx..].take_while { |x| s += x; s < target }
+    summed = nums[idx..].take_while { |x| s += x; s < target }
     return summed.minmax.sum if s == target
   }
 end
