@@ -1,5 +1,5 @@
 def part1(input, target_turn = 2020)
-  spoken = Hash(Int32, Int32).new(default_value: 0)
+  spoken = Hash(Int32, Int32).new
   turn = 0
   next_num = 0
   number = 0
@@ -7,18 +7,16 @@ def part1(input, target_turn = 2020)
     number = s.to_i
     turn += 1
     spoken[number] = turn
-    next_num = 0
   }
   while turn < target_turn
     turn += 1
     number = next_num
     if spoken.has_key?(number)
       next_num = turn - spoken[number]
-      spoken[number] = turn
     else
-      spoken[number] = turn
       next_num = 0
     end
+    spoken[number] = turn
   end
   number
 end
