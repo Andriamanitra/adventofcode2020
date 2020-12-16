@@ -4,10 +4,12 @@ def parse(input)
   valid_ranges = Hash(String, Array(Range(Int32, Int32))).new
   sections[0].each_line { |line|
     if m = line.match(/(?<name>[^:]+): (\d+)-(\d+) or (\d+)-(\d+)/)
-      r = m.to_a[2..].map(&.not_nil!.to_i)
-      valid_ranges[m["name"]] = [r[0]..r[1], r[2]..r[3]]
+      valid_ranges[m["name"]] = m.to_a[2..]
+        .map(&.not_nil!.to_i)
+        .in_groups_of(2, 0)
+        .map { |(a, b)| (a..b) }
     else
-      puts "fuck: #{line}"
+      raise "Unable to parse line: #{line}"
     end
   }
 
@@ -35,7 +37,7 @@ def part2(input)
     {
       k, (0...field_count).select { |i|
         tickets.all? { |ticket|
-          ticket[i].in?(valid_ranges[k][0]) || ticket[i].in?(valid_ranges[k][1])
+          valid_ranges[k].any? { |r| ticket[i].in?(r) }
         }
       },
     }
