@@ -1,4 +1,4 @@
-record Cube, x : Int32, y : Int32, z : Int32 do
+record Cube, x : Int32, y : Int32, z : Int32 = 0 do
   def each_neighbor(&block)
     nrange = (-1..1)
     nrange.each { |nx|
@@ -12,21 +12,36 @@ record Cube, x : Int32, y : Int32, z : Int32 do
   end
 end
 
-def parse(input)
-  active_cubes = Hash(Cube, Bool).new(default_value: false)
+record HyperCube, x : Int32, y : Int32, z : Int32 = 0, w : Int32 = 0 do
+  def each_neighbor(&block)
+    nrange = (-1..1)
+    nrange.each { |nx|
+      nrange.each { |ny|
+        nrange.each { |nz|
+          nrange.each { |nw|
+            next if nx == 0 && ny == 0 && nz == 0 && nw == 0
+            yield HyperCube.new(x + nx, y + ny, z + nz, w + nw)
+          }
+        }
+      }
+    }
+  end
+end
+
+def parse(input, cubetype)
+  active_cubes = Hash(Cube | HyperCube, Bool).new(default_value: false)
   input.each_line.with_index { |line, y|
     line.each_char.with_index { |ch, x|
-      active_cubes[Cube.new(x, y, 0)] = true if ch == '#'
+      active_cubes[cubetype.new(x, y)] = true if ch == '#'
     }
   }
   active_cubes
 end
 
 def next_state(active_cubes)
-  cubes = Hash(Cube, Bool).new(default_value: false)
-  possible_cubes = [] of Cube
+  cubes = active_cubes.class.new(default_value: false)
+  possible_cubes = active_cubes.keys
   active_cubes.keys.each { |active|
-    possible_cubes << active
     active.each_neighbor { |neighbor|
       possible_cubes << neighbor
     }
@@ -45,7 +60,15 @@ def next_state(active_cubes)
 end
 
 def part1(input)
-  active_cubes = parse(input)
+  active_cubes = parse(input, Cube)
+  6.times do
+    active_cubes = next_state(active_cubes)
+  end
+  active_cubes.size
+end
+
+def part2(input)
+  active_cubes = parse(input, HyperCube)
   6.times do
     active_cubes = next_state(active_cubes)
   end
@@ -55,3 +78,4 @@ end
 input = ARGF.gets_to_end
 
 p! part1(input)
+p! part2(input)
