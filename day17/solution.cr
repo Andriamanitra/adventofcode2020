@@ -28,8 +28,10 @@ record HyperCube, x : Int32, y : Int32, z : Int32 = 0, w : Int32 = 0 do
   end
 end
 
+alias CubeType = Cube | HyperCube
+
 def parse(input, cubetype)
-  active_cubes = Hash(Cube | HyperCube, Bool).new(default_value: false)
+  active_cubes = Hash(CubeType, Bool).new(default_value: false)
   input.each_line.with_index { |line, y|
     line.each_char.with_index { |ch, x|
       active_cubes[cubetype.new(x, y)] = true if ch == '#'
@@ -40,19 +42,17 @@ end
 
 def next_state(active_cubes)
   cubes = active_cubes.class.new(default_value: false)
-  possible_cubes = active_cubes.keys
-  active_cubes.keys.each { |active|
-    active.each_neighbor { |neighbor|
-      possible_cubes << neighbor
-    }
-  }
-  possible_cubes.each { |cube|
-    active_neighbor_count = 0
-    cube.each_neighbor { |n| active_neighbor_count += 1 if active_cubes[n] }
-    if active_cubes[cube]
-      cubes[cube] = true if 2 <= active_neighbor_count <= 3
-    else
-      cubes[cube] = true if active_neighbor_count == 3
+
+  active_neighbor_counts = Hash(CubeType, Int32).new(default_value: 0)
+  active_cubes.keys.each(&.each_neighbor { |neighbor|
+    active_neighbor_counts[neighbor] += 1
+  })
+
+  active_neighbor_counts.each { |cube, active_neighbors|
+    if active_neighbors == 3
+      cubes[cube] = true
+    elsif active_neighbors == 2 && active_cubes[cube]
+      cubes[cube] = true
     end
   }
 
@@ -61,17 +61,13 @@ end
 
 def part1(input)
   active_cubes = parse(input, Cube)
-  6.times do
-    active_cubes = next_state(active_cubes)
-  end
+  6.times { active_cubes = next_state(active_cubes) }
   active_cubes.size
 end
 
 def part2(input)
   active_cubes = parse(input, HyperCube)
-  6.times do
-    active_cubes = next_state(active_cubes)
-  end
+  6.times { active_cubes = next_state(active_cubes) }
   active_cubes.size
 end
 
