@@ -1,30 +1,20 @@
 record Cube, x : Int32, y : Int32, z : Int32 = 0 do
   def each_neighbor(&block)
-    nrange = (-1..1)
-    nrange.each { |nx|
-      nrange.each { |ny|
-        nrange.each { |nz|
-          next if nx == 0 && ny == 0 && nz == 0
-          yield Cube.new(x + nx, y + ny, z + nz)
-        }
+    [-1, 0, 1].repeated_permutations(3)
+      .each { |(dx, dy, dz)|
+        next if dx == dy == dz == 0
+        yield Cube.new(x + dx, y + dy, z + dz)
       }
-    }
   end
 end
 
 record HyperCube, x : Int32, y : Int32, z : Int32 = 0, w : Int32 = 0 do
   def each_neighbor(&block)
-    nrange = (-1..1)
-    nrange.each { |nx|
-      nrange.each { |ny|
-        nrange.each { |nz|
-          nrange.each { |nw|
-            next if nx == 0 && ny == 0 && nz == 0 && nw == 0
-            yield HyperCube.new(x + nx, y + ny, z + nz, w + nw)
-          }
-        }
+    [-1, 0, 1].repeated_permutations(4)
+      .each { |(dx, dy, dz, dw)|
+        next if dx == dy == dz == dw == 0
+        yield HyperCube.new(x + dx, y + dy, z + dz, w + dw)
       }
-    }
   end
 end
 
