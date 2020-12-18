@@ -104,7 +104,6 @@ end
 def part1(input)
   grid = parse_grid(input)
   newgrid = grid.clone
-  newgrid[0, 0] = Pos::Occupied
   changing = true
   while changing
     changing = false
@@ -129,7 +128,6 @@ end
 def part2(input)
   grid = parse_grid(input)
   newgrid = grid.clone
-  newgrid[0, 0] = Pos::Occupied
   changing = true
   while changing
     changing = false
