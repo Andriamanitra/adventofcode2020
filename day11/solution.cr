@@ -138,19 +138,17 @@ def part2(input)
         {-1, 0}, {1, 0},
         {-1, 1}, {0, 1}, {1, 1},
       ]
-      occupied = 0
-      directions.map { |(dx, dy)|
+      occupied = directions.count { |(dx, dy)|
+        seat = Pos::Invalid
         tmpx, tmpy = x + dx, y + dy
         while tmpx.in?(grid.xbounds) && tmpy.in?(grid.ybounds)
           seat = grid[tmpx, tmpy]
-          if seat == Pos::Empty
-            break
-          elsif seat == Pos::Occupied
-            occupied += 1
+          if seat != Pos::Floor
             break
           end
           tmpx, tmpy = tmpx + dx, tmpy + dy
         end
+        seat == Pos::Occupied
       }
       if val == Pos::Empty && occupied == 0
         newgrid[x, y] = Pos::Occupied
