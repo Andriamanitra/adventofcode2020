@@ -21,7 +21,6 @@ end
 
 def part1(input)
   parse(input).sum { |line|
-    line
     while line.includes?("(")
       line = line.gsub(/\(([^\(\)]*)\)/) {
         evaluate($1)
@@ -31,6 +30,13 @@ def part1(input)
   }
 end
 
+def part2(input)
+  parse(input).sum { |line|
+    0
+  }
+end
+
 input = ARGF.gets_to_end
 
 p! part1(input)
+p! part2(input)
